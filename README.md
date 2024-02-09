@@ -17,7 +17,7 @@ To do:
 - Kasper - WIP
 -- Connected til Genome cluster:
 - Otto - done
-- Alex - WIP
+- Alex - done
 - Kasper - WIP
 
 -- Bekræft møde d. 14/02 med Søren.
