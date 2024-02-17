@@ -42,7 +42,10 @@ new_start <- min(start_coords) - 500
 new_end <- max(end_coords) + 100000
 
 new_ranges <- GRanges(
-  seqnames = seqnames(ts_annot_gr),
+  seqnames = seqnames(bw_12),
   ranges = IRanges(start = new_start, end = new_end),
-  strand = strand(ts_annot_gr)
+  strand = "*"
 )
+
+overlaps <- findOverlaps(new_ranges, bw_12)
+
