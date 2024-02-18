@@ -28,6 +28,11 @@ To do:
 - Biologisk process
 - Data
 - Model
+
+Spørgsmål til Søren:
+ - Hvad bruges bigwig filen til?; Når vi har ranges og kromosomer i den anden fil, skal vi så kun bruge bigwig'en til scoren?
+ - Hvad bruges Scoren til?
+
 <br>
 GenomeDK paths: <br>
 /home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw <br>
