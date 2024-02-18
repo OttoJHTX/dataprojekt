@@ -36,6 +36,10 @@ GenomeDK paths: <br>
 Når R er startet: <br>
 annot_gr = import('/home/engellalex28/KAOs_project/annotation/Homo_sapiens.GRCh38.108.gtf') <br>
 bw = import('/home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw') <br>
+
+ts_annot_gr <- subset(annot_gr, type == "transcript") <br>
+bw_12 <- subset(bw, seqnames == "chr12") <br>
+
 start_coords <- start(ts_annot_gr) <br>
 end_coords <- end(ts_annot_gr) <br>
 new_start <- min(start_coords) - 500 <br>
