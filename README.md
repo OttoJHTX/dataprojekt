@@ -28,24 +28,24 @@ To do:
 - Biologisk process
 - Data
 - Model
+<br>
+GenomeDK paths: <br>
+/home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw <br>
+/home/engellalex28/KAOs_project/annotation/Homo_sapiens.GRCh38.108.gtf <br>
 
-GenomeDK paths:
-/home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw
-/home/engellalex28/KAOs_project/annotation/Homo_sapiens.GRCh38.108.gtf
-
-Når R er startet:
-annot_gr = import('/home/engellalex28/KAOs_project/annotation/Homo_sapiens.GRCh38.108.gtf')
-bw = import('/home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw')
-start_coords <- start(ts_annot_gr)
-end_coords <- end(ts_annot_gr)
-new_start <- min(start_coords) - 500
-new_end <- max(end_coords) + 100000
-
-new_ranges <- GRanges(
-  seqnames = seqnames(bw_12),
-  ranges = IRanges(start = new_start, end = new_end),
-  strand = "*"
-)
-
-overlaps <- findOverlaps(new_ranges, bw_12)
+Når R er startet: <br>
+annot_gr = import('/home/engellalex28/KAOs_project/annotation/Homo_sapiens.GRCh38.108.gtf') <br>
+bw = import('/home/engellalex28/KAOs_project/data/L_EGFP_rep1_tt_corr_ff_noJncReads_plus.bw') <br>
+start_coords <- start(ts_annot_gr) <br>
+end_coords <- end(ts_annot_gr) <br>
+new_start <- min(start_coords) - 500 <br>
+new_end <- max(end_coords) + 100000 <br> 
+ <br> 
+new_ranges <- GRanges( <br> 
+  seqnames = seqnames(bw_12), <br> 
+  ranges = IRanges(start = new_start, end = new_end), <br>
+  strand = "*" <br>
+) <br>
+<br>
+overlaps <- findOverlaps(new_ranges, bw_12) <br>
 
