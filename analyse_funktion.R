@@ -4,19 +4,17 @@ library(tidyverse)
 
 getwd()
 setwd("C:/Users/sejeo/Documents/Uni/4. semester/Dataprojekt")
-
-analyse <- function(ctrl_path, test_path, annotation_path, chr, gene) {
+# e.g. analyse(ctrl_path, test_path, annotation_path, "chr12", "GAPDH")
+analyse <- function(ctrl_path, test_path, annotation_path, chr, gene_name) {
   
   cps <- import(test_path)
   ctrl <- import(ctrl_path)
   annot_gr <- import(annotation_path)
   
-  ts_annot_gr <- subset(annot_gr, type == "transcript")
-  ctrl_12 <- subset(ctrl, seqnames == chr)
-  cps_12 <- subset(cps, seqnames == chr)
-  ctrl_12 <- subset(ctrl, genename == gene)
-  cps_12 <- subset(cps, genename == gene)
-  
+  ts_annot_gr <- subset(annot_gr, type == "transcript" & gene_name == gene_name)
+  ctrl <- subset(ctrl, seqnames == chr)
+  cps <- subset(cps, seqnames == chr)
+
   ### Create DF with transcript no. column, position (start & end), score etc. ###
   
   subsetOverlaps_ctrl <- as.list(rep(0,11))
@@ -29,12 +27,12 @@ analyse <- function(ctrl_path, test_path, annotation_path, chr, gene) {
     end_coords <- end(current_observation) + 100000
     
     new_ranges <- GRanges(
-      seqnames = "chr12",
+      seqnames = chr,
       ranges = IRanges(start = start_coords, end = end_coords)
     )
     
-    subsetOverlaps_ctrl[i] <- (subsetByOverlaps(ctrl_12, new_ranges))
-    subsetOverlaps_cps[i] <- (subsetByOverlaps(cps_12, new_ranges))
+    subsetOverlaps_ctrl[i] <- (subsetByOverlaps(ctrl, new_ranges))
+    subsetOverlaps_cps[i] <- (subsetByOverlaps(cps, new_ranges))
   }
   
   ### Create an empty data frame to store the results ###
