@@ -1,18 +1,30 @@
+
+############################################################
+# Function inputs:
+# Gene of interest
 GOI = 'GAPDH'
 
 # Directory specification
 ctrl_dir = "/Users/alexanderengell-hansen/Desktop/git/dataprojekt/data/"
 sample_dir = "/Users/alexanderengell-hansen/Desktop/git/dataprojekt/data/"
+annotation_path = "/Users/alexanderengell-hansen/Desktop/git/dataprojekt/"
+ctrl = c()
+sample = c()
+
+############################################################
+############################################################
+############################################################
+
 ctrl = c("control")
 sample = c("cps")
+
+
 
 strand_options = c("+"="plus", "-"="minus")
 
 
-# Whatever, temp
-annotation = annotation_path
-
-annot_gr = import(annotation_path)
+# Annotation importing
+annot_gr = import(annotation_path) # update filename
 
 
 # Subsetting annotation on gene name
@@ -26,7 +38,7 @@ end_coord = max(end(gene_annot))
 
 # Empty DF with correct length
 indexes <- seq(start_coord, end_coord)
-ctrl_df <- data.frame(index = indexes)
+GOI_data <- data.frame(index = indexes)
 
 # Loop for loading replicates and saving to DF
 for (fname in ctrl) {
@@ -35,13 +47,24 @@ for (fname in ctrl) {
                   which = GenomicRanges::GRanges(seqnames = chrom_no, 
                                                  ranges = IRanges::IRanges(start = start_coord, end = end_coord)), 
                   as = "NumericList")[[1]]
-  ctrl_df[[fname]] = ctrl_bw
+  GOI_data[[fname]] = ctrl_bw
+}
+
+# Loop for loading replicates and saving to DF
+for (fname in sample) {
+  sample_fname = paste0(sample_dir, fname, "_", strand_options[strand_sign], ".bw")
+  sample_bw = import(sample_fname, 
+                   which = GenomicRanges::GRanges(seqnames = chrom_no, 
+                                                  ranges = IRanges::IRanges(start = start_coord, end = end_coord)), 
+                   as = "NumericList")[[1]]
+  GOI_data[[fname]] = sample_bw
 }
 
 # Setting the DF indices to the positions of the reads and deleting index column
-rownames(ctrl_df) = ctrl_df$index
-ctrl_df$index = NULL
+rownames(GOI_data) = GOI_data$index
+GOI_data$index = NULL
 
+# Find coord of next gene
 next_gene_annot = subset(annot_gr, seqname = chrom_no, stand = strand_sign)
 if (strand_sign == "+") {
   ss = sort(start(next_gene_annot))
