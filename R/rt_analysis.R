@@ -1,4 +1,4 @@
-rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI, libType, gen_info, batch, norm='1', viewSamples=c('ARS2', 'CPSF73', 'INTS11', 'RRP40'), ctrl_sample='EGFP', statistic='median', usExt=5000, plot=TRUE, verbose=TRUE, verbose2=TRUE, pdf=FALSE){
+rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI, libType, gen_info, batch=NULL, norm='1', viewSamples=c('ARS2', 'CPSF73', 'INTS11', 'RRP40'), ctrl_sample='EGFP', statistic='median', usExt=5000, plot=TRUE, verbose=TRUE, verbose2=TRUE, pdf=FALSE){
   ##########################################################
   #### (1) read in gene specific data
   ########################################################## 
@@ -19,7 +19,7 @@ rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI,
   strand_options = c("+"="plus", "-"="minus")
   
   
-  # Annotation importing
+  # Annotation importing - Flyt udenfor funktion, kan genbruges
   annot_gr = import(annotation_path) # update filename
   
   
@@ -27,21 +27,37 @@ rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI,
   gene_annot = subset(annot_gr, gene_name == GOI)
   chrom_no = as.character(seqnames(gene_annot)@values)
   strand_sign = as.character(strand(gene_annot)@values)
+  chrom_no_loop = paste0("chr", chrom_no) # TEMP FIX
   
   # Coordinates
   start_coord = min(start(gene_annot))
   end_coord = max(end(gene_annot))
   
+  # Find coord of next gene
+  next_gene_annot = sort(subset(annot_gr, seqnames %in% c(chrom_no, chrom_no_loop) & strand == strand_sign))
+  if (strand_sign == "+") {
+    ss = start(next_gene_annot)
+    next_gene_coord = ss[which(ss > end_coord)[1]]
+  } else {
+    ss = end(next_gene_annot)
+    next_gene_coord = ss[rev(which(ss < start_coord))[1]]
+  }
+  
+  
+  start_coord_ext =  ifelse(strand_sign == "+", min(start(gene_annot)) - 500, next_gene_coord + 1)
+  end_coord_ext = ifelse(strand_sign == "+", next_gene_coord - 1, max(end(gene_annot)) + 500)
+  
+  
   # Empty DF with correct length
-  indexes <- seq(start_coord, end_coord)
+  indexes <- seq(start_coord_ext, end_coord_ext)
   GOI_data <- data.frame(index = indexes)
   
   # Loop for loading replicates and saving to DF
   for (fname in ctrl) {
     ctrl_fname = paste0(ctrl_dir, fname, "_", strand_options[strand_sign], ".bw")
     ctrl_bw = import(ctrl_fname, 
-                     which = GenomicRanges::GRanges(seqnames = chrom_no, 
-                                                    ranges = IRanges::IRanges(start = start_coord, end = end_coord)), 
+                     which = GenomicRanges::GRanges(seqnames = chrom_no_loop, 
+                                                    ranges = IRanges::IRanges(start = start_coord_ext, end = end_coord_ext)), 
                      as = "NumericList")[[1]]
     GOI_data[[fname]] = ctrl_bw
   }
@@ -50,8 +66,8 @@ rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI,
   for (fname in sample) {
     sample_fname = paste0(sample_dir, fname, "_", strand_options[strand_sign], ".bw")
     sample_bw = import(sample_fname, 
-                       which = GenomicRanges::GRanges(seqnames = chrom_no, 
-                                                      ranges = IRanges::IRanges(start = start_coord, end = end_coord)), 
+                       which = GenomicRanges::GRanges(seqnames = chrom_no_loop, 
+                                                      ranges = IRanges::IRanges(start = start_coord_ext, end = end_coord_ext)), 
                        as = "NumericList")[[1]]
     GOI_data[[fname]] = sample_bw
   }
@@ -60,15 +76,7 @@ rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI,
   rownames(GOI_data) = GOI_data$index
   GOI_data$index = NULL
   
-  # Find coord of next gene
-  next_gene_annot = subset(annot_gr, seqname = chrom_no, stand = strand_sign)
-  if (strand_sign == "+") {
-    ss = sort(start(next_gene_annot))
-    next_gene_coord = which(ss > end_coord)[1]
-  } else {
-    ss = sort(start(next_gene_annot))
-    next_gene_coord = which(ss < end_coord)[1]
-  }
+
   
   ###################### KAOS-KODE #########################
   
@@ -89,59 +97,109 @@ rt_analysis = function(ctrl_dir, sample_dir, annotation_path, ctrl, sample, GOI,
   ###############################################################
   
   # Remove batch effects from the log2-transformed gene of interest data using the removeBatchEffect function from the limma package
-  log2_GOI_data.nobatch = limma::removeBatchEffect(log2_GOI_data, batch=batch)
-  
+  if (!is.null(batch)) {
+    log2_GOI_data = limma::removeBatchEffect(log2_GOI_data, batch=batch)
+  } 
   # Remove the original log2-transformed gene of interest data from memory to save space
-  rm(log2_GOI_data)
+
   
   ###############################################################
   #### (4) Normalize to gene body signal
   ###############################################################
   
-  # Determine the upstream transcript start site (uTSS) and downstream transcript end site (dTES) for the GOI
-  uTSS = ifelse(strand=='+', gen_info[GOI, 'start'], gen_info[GOI, 'end'])
-  uTSS_row = which(rownames(log2_GOI_data.nobatch)==as.character(uTSS))
-  dTES = ifelse(strand=='+', gen_info[GOI, 'end'], gen_info[GOI, 'start'])
-  dTES_row = which(rownames(log2_GOI_data.nobatch)==as.character(dTES))
-  
-  # Extract transcript start sites (TSSs) and determine the main TSS
-  TSSs = extract_TSSs(gen_info, GOI) #@ extract_TSSs is a home-made function, see separate annotation
-  if (strand == '+'){
-    TSS = ifelse(length(TSSs[TSSs >= uTSS & TSSs < dTES]) > 0, TSSs[TSSs >= uTSS & TSSs < dTES][1], uTSS)
-  }else{
-    TSS = ifelse(length(TSSs[TSSs <= uTSS & TSSs > dTES]) > 0, TSSs[TSSs <= uTSS & TSSs > dTES][1], uTSS)
-  }
-  TSS_row = which(rownames(log2_GOI_data.nobatch)==as.character(TSS))
-  
-  # Extract transcript end sites (TESs) and determine the main TES
-  TESs = extract_TESs(gen_info, GOI) #@ extract_TESs is a home-made function, see separate annotation
-  TESs = unique(TESs)
-  if (strand == '+'){
-    TESs = TESs[TESs > TSS & TESs <= dTES]
-  }else{
-    TESs = TESs[TESs < TSS & TESs >= dTES]
-  }
-  if (length(TESs) == 0){
-    TESs = dTES
-  }
-  TES_rows = unlist(sapply(TESs, function(x) {which(rownames(log2_GOI_data.nobatch)==as.character(x))}))
-  
-  # Calculate standard deviations for multiple TESs and select the one with the minimum standard deviation
-  if (length(TESs) > 1){
-    stdevs = rep(NA, length(TESs))
-    for (i in 1:length(TES_rows)){
-      TES_row = TES_rows[i]
-      if (TES_row>TSS_row){
-        body.norm.factors = apply(log2_GOI_data.nobatch[TSS_row:TES_row,], 2, median)
-        log2_GOI_data.nobatch.bodynorm = t(t(log2_GOI_data.nobatch) - body.norm.factors)
-        stdevs[i] = sd(log2_GOI_data.nobatch.bodynorm[TSS_row:TES_row, ])
+  transcript_annot = subset(gene_annot, type == "transcript")
+  if (length(transcript_annot) > 1) {
+    lefts = start(transcript_annot)
+    rights = end(transcript_annot)
+    left_diffs = rep(NA, length(transcript_annot))
+    right_diffs = rep(NA, length(transcript_annot))
+    for (i in 1:length(transcript_annot)) {
+      left_center_idx = which(rownames(log2_GOI_data) == lefts[i])
+      upleft_ctrl_log2_GOI_mean = mean(rowMeans(log2_GOI_data[(left_center_idx - 100):(left_center_idx - 1), ctrl, drop = FALSE]))
+      downleft_ctrl_log2_GOI_mean = mean(rowMeans(log2_GOI_data[(left_center_idx):(left_center_idx + 99), ctrl, drop = FALSE]))
+      left_diffs[i] = downleft_ctrl_log2_GOI_mean - upleft_ctrl_log2_GOI_mean
+      right_center_idx = which(rownames(log2_GOI_data) == rights[i])
+      upright_ctrl_log2_GOI_mean = mean(rowMeans(log2_GOI_data[(right_center_idx - 100):(right_center_idx - 1), ctrl, drop = FALSE]))
+      downright_ctrl_log2_GOI_mean = mean(rowMeans(log2_GOI_data[(right_center_idx):(right_center_idx + 99), ctrl, drop = FALSE]))
+      right_diffs[i] = upright_ctrl_log2_GOI_mean - downright_ctrl_log2_GOI_mean
+    }
+    max_diffs_left = which(left_diffs == max(left_diffs))
+    max_diffs_right = which(right_diffs == max(right_diffs))
+    
+    
+    if (strand_sign == "+") {
+      TESs = rights[max_diffs_right]
+      if (length(TESs) > 1) {
+        TSSs_diffs_argmax = which.max(left_diffs[max_diffs_right]) # First-world-problem - argmax, tager kun første index, forhindrer eval. på TSS
+        final_trn_idx = max_diffs_left[TSSs_diffs_argmax]
+      }
+    } else {
+      TESs = lefts[max_diffs_left]
+      if (length(TESs) > 1) {
+        TSSs_diffs_argmax = which.max(right_diffs[max_diffs_left]) # First-world-problem - argmax, tager kun første index, forhindrer eval. på TSS
+        final_trn_idx = max_diffs_right[TSSs_diffs_argmax]
       }
     }
-    TES = TESs[which(stdevs == min(stdevs, na.rm=TRUE))]
+    final_range = transcript_annot[final_trn_idx]
+    
   }else{
-    TES = TESs
+    final_range = transcript_annot
   }
-  TES_row = which(rownames(log2_GOI_data.nobatch)==as.character(TES))
+  
+  if (strand_sign == "+") {
+    TSS = start(final_range)
+    TES = end(final_range)
+  }else{
+    TES = start(final_range)
+    TSS = end(final_range)
+  }
+  
+  # # Determine the upstream transcript start site (uTSS) and downstream transcript end site (dTES) for the GOI
+  # uTSS = ifelse(strand=='+', gen_info[GOI, 'start'], gen_info[GOI, 'end'])
+  # uTSS_row = which(rownames(log2_GOI_data.nobatch)==as.character(uTSS))
+  # dTES = ifelse(strand=='+', gen_info[GOI, 'end'], gen_info[GOI, 'start'])
+  # dTES_row = which(rownames(log2_GOI_data.nobatch)==as.character(dTES))
+  # 
+  # # Extract transcript start sites (TSSs) and determine the main TSS
+  # TSSs = extract_TSSs(gen_info, GOI) #@ extract_TSSs is a home-made function, see separate annotation
+  # if (strand == '+'){
+  #   TSS = ifelse(length(TSSs[TSSs >= uTSS & TSSs < dTES]) > 0, TSSs[TSSs >= uTSS & TSSs < dTES][1], uTSS)
+  # }else{
+  #   TSS = ifelse(length(TSSs[TSSs <= uTSS & TSSs > dTES]) > 0, TSSs[TSSs <= uTSS & TSSs > dTES][1], uTSS)
+  # }
+  # TSS_row = which(rownames(log2_GOI_data.nobatch)==as.character(TSS))
+  # 
+  # # Extract transcript end sites (TESs) and determine the main TES
+  # TESs = extract_TESs(gen_info, GOI) #@ extract_TESs is a home-made function, see separate annotation
+  # TESs = unique(TESs)
+  # if (strand == '+'){
+  #   TESs = TESs[TESs > TSS & TESs <= dTES]
+  # }else{
+  #   TESs = TESs[TESs < TSS & TESs >= dTES]
+  # }
+  # if (length(TESs) == 0){
+  #   TESs = dTES
+  # }
+  # TES_rows = unlist(sapply(TESs, function(x) {which(rownames(log2_GOI_data.nobatch)==as.character(x))}))
+  # 
+  # # Calculate standard deviations for multiple TESs and select the one with the minimum standard deviation
+  # if (length(TESs) > 1){
+  #   stdevs = rep(NA, length(TESs))
+  #   for (i in 1:length(TES_rows)){
+  #     TES_row = TES_rows[i]
+  #     if (TES_row>TSS_row){
+  #       body.norm.factors = apply(log2_GOI_data.nobatch[TSS_row:TES_row,], 2, median)
+  #       log2_GOI_data.nobatch.bodynorm = t(t(log2_GOI_data.nobatch) - body.norm.factors)
+  #       stdevs[i] = sd(log2_GOI_data.nobatch.bodynorm[TSS_row:TES_row, ])
+  #     }
+  #   }
+  #   TES = TESs[which(stdevs == min(stdevs, na.rm=TRUE))]
+  # }else{
+  #   TES = TESs
+  # }
+  # TES_row = which(rownames(log2_GOI_data.nobatch)==as.character(TES))
+  
+  
   
   # Calculate body normalization factors and adjust data accordingly
   body.norm.factors = apply(log2_GOI_data.nobatch[TSS_row:TES_row,], 2, median)
