@@ -16,6 +16,10 @@
 * Hvad var problemet med rt_analyse til at starte med?
 * Gennemgang af molekylets historie.
 * Forklaring af region og coverage.
+  * Gener kan have forskellige længder.
+  * Terminator er en "stopklods", termineringen er "bremselængden
+  * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
+  * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
 * Binner vi stadig data?
   
 
