@@ -63,7 +63,32 @@ For at generelisere generne så de passer de er generiske når vi skal modellere
 <br> <br>
 Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen.
 ```{pseudo}
-hej
+transcript_annot = subset(gene_annot, type == "transcript")
+if (estimate_TES and length(transcript_annot) > 1) {
+    Calculate outer_left and outer_right coordinates
+    Sort and extract unique start and end coordinates
+    Initialize left_diffs and right_diffs vectors
+    Iterate over lefts:
+        Calculate downleft_ctrl_log2_GOI_mean
+        Iterate over nearby left coordinates:
+            Calculate upleft_ctrl_log2_GOI_mean
+            Append difference to left_diff_vector
+        Store minimum value in left_diffs
+    Iterate over rights:
+        Calculate upright_ctrl_log2_GOI_mean
+        Iterate over nearby right coordinates:
+            Calculate downright_ctrl2_GOI_mean
+            Append difference to right_diff_vector
+        Store minimum value in right_diffs
+    Find indices of maximum values in left_diffs and right_diffs
+    
+    Update final_range:
+        Extract minimum and maximum TSSs and TESs
+        Adjust start and end coordinates
+    
+    Determine uTSS, dTES, TSS, and TES based on strand sign
+    Retrieve corresponding row indices from log2_GOI_data
+}
 ```
 
 
