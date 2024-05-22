@@ -66,4 +66,14 @@ miljø.
 
 # Modellering
 
+## Curve fitting
+ - Experiments, gaussian, exponential
+ - Plots
+ - Double Sigmoid
 
+## Hidden Markov Model
+ 
+# Perspektivering og videreudvikling
+
+ - Neural netværk
+     - Diskussion om hvorvidt det er brugbart at bruge det
