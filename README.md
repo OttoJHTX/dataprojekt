@@ -10,14 +10,14 @@ transskriptionen fortsætter for længe. Vores projekt går ud på at lave en mo
 kan identificere og beskrive disse defekter.
 
 <p>
-    <img width="300" alt="central_d" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/69349634-7729-42d3-898b-f45b653eb80e">
+    <img width="450" alt="central_d" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/69349634-7729-42d3-898b-f45b653eb80e">
     <br>
     <em>Figur 1</em>
 </p>
 
 
 <p>
-    <img width="300" alt="transkription" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/343be33a-423c-4277-bba3-be89cdda21c7">
+    <img width="450" alt="transkription" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/343be33a-423c-4277-bba3-be89cdda21c7">
     <br>
     <em>Figur 2</em>
 </p>
@@ -33,7 +33,8 @@ og beskrive denne.
 Hele processen for vores data er vist i figur 3. Efter at DNA- eller RNA-prøver er blevet sekventeret i små dele kaldet "reads", bliver de mange millioner sekvenslæs-
 ninger opbevaret i en FASTQ-fil. FASTQ-filen er et tekstbaseret filformat, der in-
 deholder reads som tekststrenge, eksempelvis sekvensen af nukleotider: "GATTTG
-GGGTTC....". Derudover inkluderer hver FASTQ-fil også information om kvaliteten
+GGGTTC....". 
+Derudover inkluderer hver FASTQ-fil også information om kvaliteten
 eller pålideligheden af læsningen for hver enkelt base i sekvensen.
 Dette bliver konverteret til en BigWig-fil, som indeholder en værdi for, hvor meget
 hver position af genets sekvens er afdækket af reads fra FASTQ-filen, dvs. hvor
@@ -51,7 +52,7 @@ ere støj. Derudover er der altid mulighed for menneskelige fejl. Vi vil dog ant
 biases er minimale, da sekvenserne er blevet læst på et laboratorie i et kontrolleret
 miljø.
 <p>
-    <img width="300" alt="Flow" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/e982dae5-1eaf-44ae-b24c-c10fd0ef467f">
+    <img width="600" alt="Flow" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/e982dae5-1eaf-44ae-b24c-c10fd0ef467f">
     <br>
     <em>Figur 2</em>
 </p>
