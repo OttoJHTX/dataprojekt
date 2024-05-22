@@ -61,26 +61,26 @@ miljø.
 ## Preprocessering
 For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$-transformere data. Her ligger vi først 1 til alle observationer, så når covereage er 0, forbliver det sådan.
 <br> <br>
-Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen. Udfordringen ved dette var, at vi i annoteringsfilen har flere annoteringer af transkripter, hvor der var forskellige koordinater for begyndelsen (TSS) og slutningen (TES) af kroppen. Disse var vi nødt til at sammenligne så vi var sikre på at finde de rigtige. 
+Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen. Udfordringen ved dette var, at vi i annoteringsfilen har flere annotationer af transkripter, hvor der var forskellige koordinater for begyndelsen (TSS) og slutningen (TES) af kroppen. Disse var vi nødt til at sammenligne så vi var sikre på at finde de rigtige. Siden DNA-strenge både kan læses forlæns og baglæns, var vi også nødt til at tage i betragtning hvilken retning vores datapunkter var.
 ```{pseudo}
-if (estimate_TES and transcript_annotations.size() > 1) {
-    Determine outer boundaries for TES and TSS estimation
-    Extract unique start and end coordinates from transcript annotations
-    Initialize vectors for storing differences in expression levels
-    Iterate over transcript start coordinates:
-        Calculate expression differences for nearby regions
-        Store minimum difference in a vector
-    Iterate over transcript end coordinates:
-        Calculate expression differences for nearby regions
-        Store minimum difference in a vector
-    Find indices of maximum difference for TES and TSS determination
+hvis (estimer_TES og transkriptions_annotationer.størrelse() > 1) {
+    Bestem ydre grænser for TES- og TSS-estimering
+    Udtræk unikke start- og slutkoordinater fra transkriptionsannotationer
+    Initialiser vektorer til opbevaring af forskelle
+    Gennemgå transkriptionsstartkoordinater:
+        Beregn forskelle for nærliggende områder
+        Gem minimumsforskel i en vektor
+    Gennemgå transkriptionsslutkoordinater:
+        Beregn forskelle for nærliggende regioner
+        Gem minimumsforskel i en vektor
+    Find indeks for maksimal forskel for TES- og TSS-bestemmelse
     
-    Update final transcript range:
-        Extract TSS and TES coordinates based on maximum difference indices
-        Adjust final range accordingly
+    Opdater endelig transkriptionsområde:
+        Udtræk TSS- og TES-koordinater baseret på maksimalt forskelsindeks
+        Juster endelig rækkefølge i overensstemmelse hermed
     
-    Determine upstream and downstream TSS and TES coordinates based on strand
-    Retrieve corresponding data rows for TSS, TES, upstream TSS, and downstream TES
+    Bestem opstrøms og nedstrøms TSS- og TES-koordinater baseret på streng
+    Hent tilsvarende data-rækker for TSS, TES, opstrøms TSS og nedstrøms TES
 }
 ```
 
