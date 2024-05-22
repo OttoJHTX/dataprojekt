@@ -40,12 +40,12 @@ hver position af genets sekvens er afdækket af reads fra FASTQ-filen, dvs. hvor
 meget data der er læst på hver position. Vi har også en annoteringsfil, der giver in-
 formation om, hvor i BigWig-filen, de specifikke gener og transskripter er. Vi bruger
 så BigWig-filen og annoteringsfilen i sammenhold, så vi kan modellere afdæknin-
-gen af specifikke gener og transskripter. <br>
+gen af specifikke gener og transskripter. <br> <br>
 Et eksempel på vores data ses i figur 4, hvor x-aksen er position på genet, og y-
 aksen er mængden af data normaliseret. Det ses så hvordan vores kontrol-data, den
 røde kurve, har minimal udsving efter terminering (kaldet "downstream of gene"),
 mens test-data, den blå kurve, udsvinger meget efter termineringen. Dermed må
-der have været en defekt i den blå kurves terminering. <br>
+der have været en defekt i den blå kurves terminering. <br> <br>
 Der er muligvis biases i data, da de maskiner, der læser sekvenserne, kan produc-
 ere støj. Derudover er der altid mulighed for menneskelige fejl. Vi vil dog antage, at
 biases er minimale, da sekvenserne er blevet læst på et laboratorie i et kontrolleret
