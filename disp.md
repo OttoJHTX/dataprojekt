@@ -19,6 +19,10 @@
   * Gener kan have forskellige længder.
   * Terminator er en "stopklods", termineringen er "bremselængden
   * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
+```
+l_{gene, i} = TES_i(#2) - TSS_i(#1) + 1
+l_{rt, fit, i} = rt_end_fit_i(#16) - TES(#2)
+```
   * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
 * Binner vi stadig data?
   
