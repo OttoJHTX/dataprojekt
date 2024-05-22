@@ -11,12 +11,11 @@
   * Grunden er at vi interesserer os for transkriptions-terminering. Forsøge at beskrive dette. Matematisk at beskrive hvad processen gør. Grundvidenskabenlig beskrivelse af essentiel process. Dette skal der være styr på for at celler har det godt. Længde og styrke
   * Når celler er stressede (evt. kræft) har nogen en teori om at genet forsøger at modvirke dette i form af terminerings-defekten.
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
-  * 
+  * Independent Gaussian fitting, 2 states - 0 = ingen forskel, 1 = forskel (hidden), Viterbi decoding (robust)
 * Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
 * Hvad var problemet med rt_analyse til at starte med?
 * Gennemgang af molekylets historie.
 * Forklaring af region og coverage.
-  * 
 * Binner vi stadig data?
   
 
