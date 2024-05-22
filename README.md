@@ -62,7 +62,9 @@ miljø.
 For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$-transformere data. Her ligger vi først 1 til alle observationer, så når covereage er 0, forbliver det sådan.
 <br> <br>
 Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen.
-
+```{pseudo}
+hej
+```
 
 
 
