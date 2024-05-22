@@ -61,33 +61,26 @@ miljø.
 ## Preprocessering
 For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$-transformere data. Her ligger vi først 1 til alle observationer, så når covereage er 0, forbliver det sådan.
 <br> <br>
-Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen.
+Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen. Udfordringen ved dette var, at vi i annoteringsfilen har flere annoteringer af transkripter, hvor der var forskellige koordinater for begyndelsen (TSS) og slutningen (TES) af kroppen. Disse var vi nødt til at sammenligne så vi var sikre på at finde de rigtige
 ```{pseudo}
-transcript_annot = subset(gene_annot, type == "transcript")
-if (estimate_TES and length(transcript_annot) > 1) {
-    Calculate outer_left and outer_right coordinates
-    Sort and extract unique start and end coordinates
-    Initialize left_diffs and right_diffs vectors
-    Iterate over lefts:
-        Calculate downleft_ctrl_log2_GOI_mean
-        Iterate over nearby left coordinates:
-            Calculate upleft_ctrl_log2_GOI_mean
-            Append difference to left_diff_vector
-        Store minimum value in left_diffs
-    Iterate over rights:
-        Calculate upright_ctrl_log2_GOI_mean
-        Iterate over nearby right coordinates:
-            Calculate downright_ctrl2_GOI_mean
-            Append difference to right_diff_vector
-        Store minimum value in right_diffs
-    Find indices of maximum values in left_diffs and right_diffs
+if (estimate_TES and transcript_annotations.size() > 1) {
+    Determine outer boundaries for TES and TSS estimation
+    Extract unique start and end coordinates from transcript annotations
+    Initialize vectors for storing differences in expression levels
+    Iterate over transcript start coordinates:
+        Calculate expression differences for nearby regions
+        Store minimum difference in a vector
+    Iterate over transcript end coordinates:
+        Calculate expression differences for nearby regions
+        Store minimum difference in a vector
+    Find indices of maximum difference for TES and TSS determination
     
-    Update final_range:
-        Extract minimum and maximum TSSs and TESs
-        Adjust start and end coordinates
+    Update final transcript range:
+        Extract TSS and TES coordinates based on maximum difference indices
+        Adjust final range accordingly
     
-    Determine uTSS, dTES, TSS, and TES based on strand sign
-    Retrieve corresponding row indices from log2_GOI_data
+    Determine upstream and downstream TSS and TES coordinates based on strand
+    Retrieve corresponding data rows for TSS, TES, upstream TSS, and downstream TES
 }
 ```
 
