@@ -13,6 +13,8 @@
 * Hvad var problemet med rt_analyse til at starte med?
 * Gennemgang af molekylets historie.
 * Forklaring af region og coverage.
+
+* Binner vi stadig data?
   
 
 ## To-do:
