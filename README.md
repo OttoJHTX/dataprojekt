@@ -60,9 +60,11 @@ miljø.
 
 ## Preprocessering
 
+ - Binning
  - Identificér kroppen
  - Antagelser for at kroppen er ens
  - Normaliseret
+     - log-transformer, plus 1
 
 # Modellering
 
