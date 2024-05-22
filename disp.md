@@ -14,4 +14,4 @@ Hvad har vi lavet?
 12. Vi laver også en wrapper til rt_analyse, så det kan køres på clusteret.
 13. Vi kører rt_analyse på ca. 10.386 gener (både en med negativ og en med positiv rt for hvert gen) -> får et datasæt ud. 
 14. Vi opdager at funktionen, der detekter readthrough ikke måler de nødvendige inputs til netværket hvis der ikke er et readthrough
-15. V
+15. Vi går videre uden et neuralt netværk
