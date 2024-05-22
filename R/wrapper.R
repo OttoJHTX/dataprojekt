@@ -2,14 +2,15 @@
 
 ################# (1) libraries                   #################
 
-if(!require("BiocManager")) {install.packages("BiocManager")}
-if(!require("rtracklayer")) {BiocManager::install("rtracklayer")}
-if(!require("STAN")) {BiocManager::install("STAN")}
-if(!require("limma")) {BiocManager::install("limma")}
-if(!require("sicegar")) {BiocManager::install("sicegar")}
-if(!require("doParallel")) {install.packages("doParallel")}
+# if(!require("BiocManager")) {install.packages("BiocManager")}
+# if(!require("rtracklayer")) {BiocManager::install("rtracklayer")}
+# if(!require("STAN")) {BiocManager::install("STAN")}
+# if(!require("limma")) {BiocManager::install("limma")}
+# if(!require("sicegar")) {BiocManager::install("sicegar")}
+# if(!require("doParallel")) {install.packages("doParallel")}
 
-library(BiocManager)
+# library(BiocManager)
+library(GenomicRanges)
 library(rtracklayer)
 library(STAN)
 library(limma)
@@ -67,12 +68,31 @@ cols[["ctrl"]] = rgb(8/255, 76/255, 97/255, 1)
 cols[["sample"]] = rgb(219/255, 58/255, 52/255, 1)
 
 cols_trans = list()
-cols_trans[['ctrl']] = rgb(8/255, 76/255, 97/255, 1)
-cols_trans[['sample']] = rgb(219/255, 58/255, 52/255, 1)
+cols_trans[['ctrl']] = rgb(8/255, 76/255, 97/255, 0.5)
+cols_trans[['sample']] = rgb(219/255, 58/255, 52/255, 0.5)
 
+################# (5) organize stuff              #################
+#source(paste0(wd_R, "readthrough_functions.R"))
 
+annotation_path = paste0(wd_R, "adjusted_annotation.gtf")
 
-################# (5) general info table          #################
+annot_gr = import(annotation_path) # update filename
+annot_gr = sort(annot_gr)
+
+pc_genes_gr = subset(annot_gr, gene_biotype=='protein_coding' & type=='gene')
+# fjern overlappende
+int_ovlps = findOverlaps(pc_genes_gr, drop.self=TRUE, drop.redundant=TRUE)
+
+int_ovlps_indices = unique(c(queryHits(int_ovlps),subjectHits(int_ovlps)))
+
+pc_genes_gr = pc_genes_gr[-int_ovlps_indices]
+
+GOIs = mcols(pc_genes_gr)$gene_name
+GOIs = GOIs[!duplicated(GOIs)]
+
+for (GOI in GOIs[sample(seq_along(GOIs), 10)]){
+  x = rt_analysis(ctrl_dir, sample_dir, annot=annot_gr, ctrl, sample, GOI, estimate_TES=FALSE, batch=NULL, norm='1', statistic='median', usExt=5000, plot=FALSE, verbose=FALSE, verbose2=TRUE)
+}
 
 
 ################# (6) run the script              #################
@@ -81,9 +101,9 @@ cols_trans[['sample']] = rgb(219/255, 58/255, 52/255, 1)
 
 if (ncores > 1){
   registerDoParallel(cores = ncores)
-  readthrough.list = foreach(GOI = GOIs) %dopar% tryCatch({rt_analysis(ctrl_dir, sample_dir, annot, ctrl, sample, GOI, batch, normalization, statistic='median', usExt, plot=FALSE, verbose=FALSE, verbose2=TRUE)}, error = function(e) {return('error')})
+  readthrough.list = foreach(GOI = GOIs) %dopar% tryCatch({rt_analysis(ctrl_dir, sample_dir, annot, ctrl, sample, GOI, estimate_TES=FALSE, batch, normalization, statistic='median', usExt, plot=FALSE, verbose=FALSE, verbose2=TRUE)}, error = function(e) {return('error')})
 }else{
-  readthrough.list = lapply(GOIs, function(GOI) tryCatch({rt_analysis(ctrl_dir, sample_dir, annot, ctrl, sample, GOI, batch, normalization, statistic='median', usExt, plot=FALSE, verbose=FALSE, verbose2=TRUE)}, error = function(e) {return('error')}) )
+  readthrough.list = lapply(GOIs, function(GOI) tryCatch({rt_analysis(ctrl_dir, sample_dir, annot, ctrl, sample, GOI, estimate_TES=FALSE, batch, normalization, statistic='median', usExt, plot=FALSE, verbose=FALSE, verbose2=TRUE)}, error = function(e) {return('error')}) )
 }
 names(readthrough.list) = GOIs
 
