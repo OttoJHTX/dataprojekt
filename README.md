@@ -9,7 +9,13 @@ fælde, blandt andet forårsaget af stress, kan der ske defekter i termineringen
 transskriptionen fortsætter for længe. Vores projekt går ud på at lave en model, der
 kan identificere og beskrive disse defekter.
 
-<img width="696" alt="central_d" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/69349634-7729-42d3-898b-f45b653eb80e">
+<p>
+    <img width="300" alt="central_d" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/69349634-7729-42d3-898b-f45b653eb80e">
+    <em>Figur 1</em>
+</p>
+
+<img width="569" alt="transkription" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/343be33a-423c-4277-bba3-be89cdda21c7">
+
 
 # Data
 
