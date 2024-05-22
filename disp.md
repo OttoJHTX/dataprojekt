@@ -15,3 +15,9 @@ Hvad har vi lavet?
 13. Vi kører rt_analyse på ca. 10.386 gener (både en med negativ og en med positiv rt for hvert gen) -> får et datasæt ud. 
 14. Vi opdager at funktionen, der detekter readthrough ikke måler de nødvendige inputs til netværket hvis der ikke er et readthrough
 15. Vi går videre uden et neuralt netværk
+
+
+Disposition:
+* Introduktion til projektet: Det centrale dogme, transkriptionelle defekter & hvorfor?
+* Data: Hvad arbejder vi med? Hvordan ser det ud? Hvordan arbejder vi med det?
+* 
