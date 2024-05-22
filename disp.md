@@ -10,11 +10,10 @@
 * Hvad er formålet? Hvad vil du have ud af at have en generel rt-analyse funktion?
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
 * Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
+* Hvad var problemet med rt_analyse til at starte med?
 
 
-
-Hvad har vi lavet? 
-
+#### Hvad har vi lavet? 
 1. Læste op på det centrale dogme/genetisk struktur generelt.
 2. Forståelse af data (metrics), filtyper etc.
 3. Forbinde til cluster/server med SSH og lære at navigere derinde/benytte funktionaliteter.
