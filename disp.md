@@ -1,6 +1,7 @@
 ## Disposition:
 * Introduktion til projektet: Det centrale dogme, transkriptionelle defekter & hvorfor?
 * Data: Hvad arbejder vi med? Hvordan ser det ud? Hvordan arbejder vi med det? - Inkluder normalisering
+* Indlæse data
 * Modellering: Double-sigmoidal + Hidden Markov.
 * Readthrough Analysis: Eksempel.
 * Perspektiv: Machine-learning til detection af readthrough?
@@ -14,17 +15,14 @@
   * Independent Gaussian fitting, 2 states - 0 = ingen forskel, 1 = forskel (hidden), Viterbi decoding (robust)
 * Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
 * Hvad var problemet med rt_analyse til at starte med?
-* Gennemgang af molekylets historie.
+  * Var ikke generel 
 * Forklaring af region og coverage.
   * Gener kan have forskellige længder.
   * Terminator er en "stopklods", termineringen er "bremselængden
   * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
-```
-l_{gene, i} = TES_i(#2) - TSS_i(#1) + 1
-l_{rt, fit, i} = rt_end_fit_i(#16) - TES(#2)
-```
   * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
-* Binner vi stadig data?
+* Binner vi stadig data når vi finder kroppen?
+  * Nej, kun til fitting
   
 
 ## To-do:
