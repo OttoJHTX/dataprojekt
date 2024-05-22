@@ -21,6 +21,7 @@
 * Omskrive og flottificere kode (DEMO).
 * Plots produceret med egen kode.
 * Få styr på HMM & Double-Sigmoidal.
+* Splitte rt analysis op
 
 ## Hvad har vi lavet? 
 1. Læste op på det centrale dogme/genetisk struktur generelt.
