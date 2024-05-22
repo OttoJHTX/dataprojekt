@@ -13,7 +13,7 @@
 * Hvad var problemet med rt_analyse til at starte med?
 
 
-#### Hvad har vi lavet? 
+## Hvad har vi lavet? 
 1. Læste op på det centrale dogme/genetisk struktur generelt.
 2. Forståelse af data (metrics), filtyper etc.
 3. Forbinde til cluster/server med SSH og lære at navigere derinde/benytte funktionaliteter.
