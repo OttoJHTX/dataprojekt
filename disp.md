@@ -8,14 +8,15 @@
 
 ## Spørgsmål til Søren:
 * Hvad er formålet? Hvad vil du have ud af at have en generel rt-analyse funktion?
-  * Grunden er at vi interesserer os for transkriptions-terminering. Forsøge at beskrive dette. Matematisk at beskrive hvad processen gør. Grundvidenskabenlig beskrivelse af essentiel process. Dette skal der være sttyr på for at celler har det godt.
-  * Når celler er stressede har nogen en teori en om at genet forsøger at reparere på dette i form af terminerings-defekten
+  * Grunden er at vi interesserer os for transkriptions-terminering. Forsøge at beskrive dette. Matematisk at beskrive hvad processen gør. Grundvidenskabenlig beskrivelse af essentiel process. Dette skal der være styr på for at celler har det godt. Længde og styrke
+  * Når celler er stressede (evt. kræft) har nogen en teori om at genet forsøger at modvirke dette i form af terminerings-defekten.
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
+  * 
 * Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
 * Hvad var problemet med rt_analyse til at starte med?
 * Gennemgang af molekylets historie.
 * Forklaring af region og coverage.
-
+  * 
 * Binner vi stadig data?
   
 
