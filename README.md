@@ -15,8 +15,12 @@ kan identificere og beskrive disse defekter.
     <em>Figur 1</em>
 </p>
 
-<img width="569" alt="transkription" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/343be33a-423c-4277-bba3-be89cdda21c7">
 
+<p>
+    <img width="569" alt="transkription" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/343be33a-423c-4277-bba3-be89cdda21c7">
+    <br>
+    <em>Figur 2</em>
+</p>
 
 # Data
 
