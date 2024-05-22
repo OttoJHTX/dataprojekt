@@ -13,7 +13,6 @@
   * Når celler er stressede (evt. kræft) har nogen en teori om at genet forsøger at modvirke dette i form af terminerings-defekten.
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
   * Independent Gaussian fitting, 2 states - 0 = ingen forskel, 1 = forskel (hidden), Viterbi decoding (robust)
-* Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
 * Hvad var problemet med rt_analyse til at starte med?
   * Var ikke generel 
 * Forklaring af region og coverage.
