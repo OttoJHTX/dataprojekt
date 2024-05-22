@@ -16,6 +16,7 @@
   * HMM giver "vindue" hvor vi fitter double-fitted sigmoidal
   * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
   * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
+  * Independent Gaussian og Double-fitted sigmoidal valgt ved at prøve sig frem - findes muligvis bedre fit
 * Hvad var problemet med rt_analyse til at starte med?
   * Var ikke generel 
 * Forklaring af region og coverage.
