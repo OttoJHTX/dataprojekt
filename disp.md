@@ -1,4 +1,4 @@
-### Disposition:
+## Disposition:
 * Introduktion til projektet: Det centrale dogme, transkriptionelle defekter & hvorfor?
 * Data: Hvad arbejder vi med? Hvordan ser det ud? Hvordan arbejder vi med det? - Inkluder normalisering
 * Modellering: Double-sigmoidal + Hidden Markov.
