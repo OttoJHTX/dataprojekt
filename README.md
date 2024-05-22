@@ -59,7 +59,7 @@ miljø.
 </p>
 
 ## Preprocessering
-For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er log_2
+For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$
  - Binning
  - Identificér kroppen
  - Antagelser for at kroppen er ens
