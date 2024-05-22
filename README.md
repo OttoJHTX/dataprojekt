@@ -62,7 +62,7 @@ miljø.
 For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$-transformere data. Her ligger vi først 1 til alle observationer, så når covereage er 0, forbliver det sådan.
 
 ```{r}
-plot(cars)
+log2_GOI_data = log2(GOI_data + 1)
 ```
 
  - Binning
