@@ -11,7 +11,16 @@
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
 * Hvorfor rt_analyse negativ ikke giver samme output metrics som positiv?
 * Hvad var problemet med rt_analyse til at starte med?
+* Gennemgang af molekylets historie.
+* Forklaring af region og coverage.
+  
 
+## To-do:
+* Lave summary-stats + plots på data fra det endelige dataset.
+* Pimp our GitHub.
+* Omskrive og flottificere kode (DEMO).
+* Plots produceret med egen kode.
+* Få styr på HMM & Double-Sigmoidal.
 
 ## Hvad har vi lavet? 
 1. Læste op på det centrale dogme/genetisk struktur generelt.
