@@ -13,13 +13,14 @@
   * Når celler er stressede (evt. kræft) har nogen en teori om at genet forsøger at modvirke dette i form af terminerings-defekten.
 * Gennemgang af "Double-sigmoidal + Hidden Markov"
   * Independent Gaussian fitting, 2 states - 0 = ingen forskel, 1 = forskel (hidden), Viterbi decoding (robust)
+  * HMM giver "vindue" hvor vi fitter double-fitted sigmoidal
+  * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
+  * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
 * Hvad var problemet med rt_analyse til at starte med?
   * Var ikke generel 
 * Forklaring af region og coverage.
   * Gener kan have forskellige længder.
   * Terminator er en "stopklods", termineringen er "bremselængden
-  * Korrelation: længde på gen vs. længde af readthrough (kun for double-fitted sigmoidal)
-  * Single sigmoidal hvis terminering bliver forstyrret af nyt gen
 * Binner vi stadig data når vi finder kroppen?
   * Nej, kun til fitting
   
