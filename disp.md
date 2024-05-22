@@ -13,4 +13,5 @@ Hvad har vi lavet?
 11. I samarbejde med Søren, videreudvikler vi hans rt_analysis script - vi udvikler både tekniske aspekter samt generaliserer scriptes 'kørsel', så det er mere fleksibelt og kan håndtere at køre n-gener på samme tid.
 12. Vi laver også en wrapper til rt_analyse, så det kan køres på clusteret.
 13. Vi kører rt_analyse på ca. 10.386 gener (både en med negativ og en med positiv rt for hvert gen) -> får et datasæt ud. 
-14. Vi opdager
+14. Vi opdager at funktionen, der detekter readthrough ikke måler de nødvendige inputs til netværket hvis der ikke er et readthrough
+15. V
