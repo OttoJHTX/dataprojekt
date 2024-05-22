@@ -11,6 +11,7 @@ kan identificere og beskrive disse defekter.
 
 <p>
     <img width="300" alt="central_d" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/69349634-7729-42d3-898b-f45b653eb80e">
+    <br>
     <em>Figur 1</em>
 </p>
 
