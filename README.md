@@ -30,6 +30,8 @@ gen, med henblik på at afgøre om der er en defekt eller ej, såvel som at kvan
 og beskrive denne.
 
 # Data
+
+## Datastruktur
 Hele processen for vores data er vist i figur 3. Efter at DNA- eller RNA-prøver er blevet sekventeret i små dele kaldet "reads", bliver de mange millioner sekvenslæs-
 ninger opbevaret i en FASTQ-fil. FASTQ-filen er et tekstbaseret filformat, der in-
 deholder reads som tekststrenge, eksempelvis sekvensen af nukleotider: "GATTTG
@@ -56,6 +58,12 @@ miljø.
     <em>Figur 2</em>
 </p>
 
+## Preprocessering
 
+ - Identificér kroppen
+ - Antagelser for at kroppen er ens
+ - Normaliseret
+
+# Modellering
 
 
