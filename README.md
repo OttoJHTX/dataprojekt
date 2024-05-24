@@ -16,18 +16,6 @@ Således er transskriptions-terminering også en kompliceret proces, der involve
 For at kunne forstå termineringen og dens involverede trin er det relevant at kunne udføre en detaljeret beskrivelse af read-through under forskellige betingelser. Vi har i dette projekt været med til at designe en model og algoritme, der kan lave en kvantitativ beskrivelse af read-through på individuelle gener baseret på transskriptionsdata fra celler udsat for forskellige betingelser.
 <br> <br>
 
-
-
-
-
-
-Der eksisterer få værktøjer til analyse af terminerings-defekter i transskription, og
-de få, der eksisterer, er mangelfulde og begrænsede i deres evner til at kvantificere
-og beskrive defekten. For at adressere denne mangel, vil vores projekt fokusere på
-udviklingen af et værktøj der kan modellere og beskrive transskriptionsterminerin-
-gen, med henblik på at afgøre om der er en defekt eller ej, såvel som at kvantificere
-og beskrive denne.
-
 # Data
 
 ## Datastruktur
