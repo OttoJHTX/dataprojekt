@@ -55,34 +55,13 @@ miljø.
 <p>
     <img width="600" alt="Flow" src="https://github.com/OttoJHTX/dataprojekt/assets/49984447/e982dae5-1eaf-44ae-b24c-c10fd0ef467f">
     <br>
-    <em>Figur 2</em>
+    <em>Figur 3</em>
 </p>
 
 ## Preprocessering
 For at generelisere generne så de passer de er generiske når vi skal modellere på dem, har vi brug for at normalisere vores data. Det første vi gør er $log_2$-transformere data. Her ligger vi først 1 til alle observationer, så når covereage er 0, forbliver det sådan.
 <br> <br>
 Vi fortsatte derefter til at finde kroppen af generne, så vi kunne undersøge antagelsen om, at kroppen ville være ens for gener med- og uden defekt i termineringen. Udfordringen ved dette var, at vi i annoteringsfilen har flere annotationer af transkripter, hvor der var forskellige koordinater for begyndelsen (TSS) og slutningen (TES) af kroppen. Disse var vi nødt til at sammenligne så vi var sikre på at finde de rigtige. Siden DNA-strenge både kan læses forlæns og baglæns, var vi også nødt til at tage i betragtning hvilken retning vores datapunkter var.
-```{pseudo}
-hvis (estimer_TES og transkriptions_annotationer.størrelse() > 1) {
-    Bestem ydre grænser for TES- og TSS-estimering
-    Udtræk unikke start- og slutkoordinater fra transkriptionsannotationer
-    Initialiser vektorer til opbevaring af forskelle
-    Gennemgå transkriptionsstartkoordinater:
-        Beregn forskelle for nærliggende områder
-        Gem minimumsforskel i en vektor
-    Gennemgå transkriptionsslutkoordinater:
-        Beregn forskelle for nærliggende regioner
-        Gem minimumsforskel i en vektor
-    Find indeks for maksimal forskel for TES- og TSS-bestemmelse
-    
-    Opdater endelig transkriptionsområde:
-        Udtræk TSS- og TES-koordinater baseret på maksimalt forskelsindeks
-        Juster endelig rækkefølge i overensstemmelse hermed
-    
-    Bestem opstrøms og nedstrøms TSS- og TES-koordinater baseret på streng
-    Hent tilsvarende data-rækker for TSS, TES, opstrøms TSS og nedstrøms TES
-}
-```
 
 
 
